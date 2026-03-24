@@ -47,6 +47,6 @@ npm run dev
 
 ## Notes
 
-- The countdown automatically targets the next upcoming March 2.
+- The countdown automatically targets the next upcoming April 2.
 - Companion booking opens in a new tab so the primary registration flow stays intact.
 - All critical submissions are validated server-side with Zod.

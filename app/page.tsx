@@ -117,7 +117,7 @@ export default function HomePage() {
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-mist/60">
-            A live countdown now tracks the next upcoming March 2 celebration window.
+            A live countdown now tracks the next upcoming April 2 celebration window.
           </p>
         </div>
 
