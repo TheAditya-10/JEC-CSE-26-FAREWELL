@@ -7,34 +7,61 @@ import { cn } from "@/lib/utils";
 type SynthNode = {
   context: AudioContext;
   masterGain: GainNode;
+  filter: BiquadFilterNode;
   oscillators: OscillatorNode[];
+  lfo: OscillatorNode;
+  lfoGain: GainNode;
 };
 
 function createAmbientSynth() {
-  const context = new AudioContext();
+  const AudioContextClass =
+    window.AudioContext ||
+    ((window as Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext })
+      .webkitAudioContext as typeof AudioContext | undefined);
+
+  if (!AudioContextClass) {
+    throw new Error("This browser does not support Web Audio.");
+  }
+
+  const context = new AudioContextClass();
   const masterGain = context.createGain();
+  const filter = context.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = 1400;
+  filter.Q.value = 0.6;
+
   masterGain.gain.value = 0.0001;
+  filter.connect(masterGain);
   masterGain.connect(context.destination);
 
-  const notes = [220, 277.18, 329.63];
+  const notes = [220, 277.18, 329.63, 440];
   const oscillators = notes.map((frequency, index) => {
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
 
-    oscillator.type = index === 1 ? "triangle" : "sine";
+    oscillator.type = index % 2 === 0 ? "triangle" : "sawtooth";
     oscillator.frequency.value = frequency;
-    oscillator.detune.value = index * 3;
-    gainNode.gain.value = 0.02;
+    oscillator.detune.value = index % 2 === 0 ? -6 + index * 2 : 5 - index * 2;
+    gainNode.gain.value = index === 3 ? 0.012 : 0.028;
     oscillator.connect(gainNode);
-    gainNode.connect(masterGain);
+    gainNode.connect(filter);
     oscillator.start();
 
     return oscillator;
   });
 
-  masterGain.gain.linearRampToValueAtTime(0.08, context.currentTime + 1.2);
+  const lfo = context.createOscillator();
+  const lfoGain = context.createGain();
+  lfo.type = "sine";
+  lfo.frequency.value = 0.18;
+  lfoGain.gain.value = 180;
+  lfo.connect(lfoGain);
+  lfoGain.connect(filter.frequency);
+  lfo.start();
 
-  return { context, masterGain, oscillators };
+  masterGain.gain.linearRampToValueAtTime(0.16, context.currentTime + 1.1);
+
+  return { context, masterGain, filter, oscillators, lfo, lfoGain };
 }
 
 export function MusicToggle() {
@@ -52,6 +79,7 @@ export function MusicToggle() {
         synthRef.current.context.currentTime + 0.4
       );
       synthRef.current.oscillators.forEach((oscillator) => oscillator.stop());
+      synthRef.current.lfo.stop();
       void synthRef.current.context.close();
       synthRef.current = null;
     };
@@ -66,6 +94,7 @@ export function MusicToggle() {
       synthRef.current.oscillators.forEach((oscillator) =>
         oscillator.stop(synthRef.current!.context.currentTime + 0.4)
       );
+      synthRef.current.lfo.stop(synthRef.current.context.currentTime + 0.4);
       window.setTimeout(() => {
         void synthRef.current?.context.close();
         synthRef.current = null;

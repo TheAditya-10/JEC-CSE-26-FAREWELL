@@ -101,7 +101,7 @@ export function ExtrasForm({ userId, isCompanion, parentUserId }: ExtrasFormProp
         </div>
 
         <p className="text-sm leading-7 text-mist/72">
-          Would you like to bring a companion to share this memorable evening?
+          Would you like to bring a companion to share this memorable day?
         </p>
 
         {!isCompanion && userId ? (

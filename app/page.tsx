@@ -101,7 +101,7 @@ export default function HomePage() {
               </div>
 
               <p className="text-sm leading-7 text-mist/65">
-                This evening is reserved for remembrance, gratitude, and the quiet pride of all that your batch leaves behind.
+                This day is reserved for remembrance, gratitude, and the quiet pride of all that your batch leaves behind.
               </p>
             </div>
           </Card>
@@ -113,7 +113,7 @@ export default function HomePage() {
           <div>
             <p className="text-xs uppercase tracking-[0.38em] text-gold/70">Countdown</p>
             <h2 className="mt-3 font-display text-3xl text-white sm:text-4xl">
-              The evening draws nearer
+              The day draws nearer
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-mist/60">

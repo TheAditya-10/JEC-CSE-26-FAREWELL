@@ -16,7 +16,7 @@ export default async function PaymentPage({ searchParams }: PaymentPageProps) {
     <PageShell
       eyebrow="Step 2"
       title="Seal Your Confirmation"
-      description="A final contribution of grace ensures that your seat is reserved for the evening."
+      description="A final contribution of grace ensures that your seat is reserved for the day."
       backHref="/register"
     >
       <PaymentForm

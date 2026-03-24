@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const phrases = [
   "Let’s make your ending memorable.",
-  "An evening dedicated to stories, memories, and legacy."
+  "An day dedicated to stories, memories, and legacy."
 ];
 
 export function HeroTyping() {
