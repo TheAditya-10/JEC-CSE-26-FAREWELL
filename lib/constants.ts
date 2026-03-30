@@ -1,7 +1,7 @@
 export const EVENT_NAME = "JEC CSE '26 Farewell";
 export const EVENT_SUBTITLE =
   "Crafted with respect by your juniors, to celebrate your journey.";
-export const EVENT_DATE_LABEL = "4th April";
+export const EVENT_DATE_LABEL = "4th or 6th April";
 export const EVENT_VENUE_LABEL = "To Be Revealed Soon";
 export const CONTRIBUTION_AMOUNT = 1000;
 
